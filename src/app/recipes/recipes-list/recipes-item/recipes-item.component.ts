@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Recipe } from '../../recipe.model';
+import { RecipeService } from '../../recipe.service';
 
 
 @Component({
@@ -13,17 +14,14 @@ import { Recipe } from '../../recipe.model';
 //we add @Input so we can bind this component property from outside
 export class RecipesItemComponent implements OnInit {
   @Input() recipe: Recipe;
-  //adding @Output so we can listen from outside
-  //void is in the tag since we are not passing information
-  @Output() recipeSelected = new EventEmitter<void>();
 
-  constructor() { }
+  constructor(private recipeService: RecipeService) { }
 
   ngOnInit() {
   }
-
+//we need to call a method in the service which will transfer data
   onSelected() {
-    this.recipeSelected.emit();
+    this.recipeService.recipeSelected.emit(this.recipe);
   }
 
 }
